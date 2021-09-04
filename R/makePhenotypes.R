@@ -22,6 +22,7 @@
 #' @importFrom dplyr full_join
 #' @export makePhenotypes
 #' @examples
+#' \dontrun{
 #' pheno <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
 #' res.eng=covid_example("sim_result_england.txt.gz"),
 #' death.file=covid_example("sim_death.txt.gz"),
@@ -33,6 +34,7 @@
 #' code.file=covid_example("coding240.txt.gz"),
 #' pheno.type = "severity",
 #' out.name=paste0(covid_example("results"),"/phenotype"))
+#' }
 #'
 
 makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.file, death.cause.file, hesin.file, hesin_diag.file, hesin_oper.file, hesin_critical.file, code.file, pheno.type = "severity", Date=NULL, out.name=NULL){

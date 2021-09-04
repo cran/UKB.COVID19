@@ -57,6 +57,7 @@ Returns data.frame and outputs a phenotype file with phenotypes for COVID-10 sus
 Generate COVID-19 phenotypes
 }
 \examples{
+\dontrun{
 pheno <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
 res.eng=covid_example("sim_result_england.txt.gz"),
 death.file=covid_example("sim_death.txt.gz"),
@@ -68,5 +69,6 @@ hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
 code.file=covid_example("coding240.txt.gz"),
 pheno.type = "severity",
 out.name=paste0(covid_example("results"),"/phenotype"))
+}
 
 }
