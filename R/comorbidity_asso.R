@@ -8,25 +8,23 @@
 #' @param cov.name Selected covariates names. By default, cov.name=c("sex","age","bmi"), covariates are sex age and BMI.
 #' @param phe.name Phenotype name.
 #' @param ICD10.file The ICD10 code file, which is included in the package.
-#' @param output Name of comorbidity association test result file to be outputted. By default, output=NULL, it is {population}_{phenotype name}_comorbidity_asso.csv.
-#' @return Outputs a comorbidity association test result file with OR, 95% CI and p-value.
-#' @export comorbidity.asso
+#' @return Outputs a comorbidity association test result with OR, 95% CI and p-value.
+#' @export comorbidity_asso
 #' @import questionr
 #' @import utils
 #' @examples
 #' \dontrun{
-#' comorb.asso <- comorbidity.asso(pheno=phe,
+#' comorb.asso <- comorbidity_asso(pheno=phe,
 #' covariates=covar,
 #' cormorbidity=comorb,
 #' population="white",
 #' cov.name=c("sex","age","bmi","SES","smoke","inAgedCare"),
 #' phe.name="hospitalisation",
-#' ICD10.file=covid_example("ICD10.coding19.txt.gz"),
-#' output = "cormorb_hospitalisation_asso.csv")
+#' ICD10.file=covid_example("ICD10.coding19.txt.gz"))
 #' }
 #'
 
-comorbidity.asso <- function(pheno, covariates, cormorbidity, population = "all", cov.name=c("sex","age","bmi"), phe.name, ICD10.file, output=NULL){
+comorbidity_asso <- function(pheno, covariates, cormorbidity, population = "all", cov.name=c("sex","age","bmi"), phe.name, ICD10.file){
   res <- inner_join(pheno, covariates, by="ID")
   code <- as.character(read.table(ICD10.file, sep = "\t")[,2])
   #if(any(c(population,cov.name) %in% (colnames(res)))) res <- res[,!(colnames(res) %in% c(population,cov.name))]
@@ -56,9 +54,8 @@ comorbidity.asso <- function(pheno, covariates, cormorbidity, population = "all"
                                    phe.name, cov.name=covars)[n.covars+2,]
     }
   }
-  if(is.null(output)) output <- paste0(population,"_",phe.name, "_comorbidity_asso.csv")
-  write.csv(comorb.asso, output)
-  
-  return(comorb.asso)
+
+  class(comorb.asso) <- "data.frame"
+  comorb.asso
 }
 

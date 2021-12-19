@@ -4,8 +4,8 @@
 #' @param ukb.data tab delimited UK Biobank phenotype file, containing sample qc fields (with default UKBiobank codes as column names)
 #' @param pheno phenotype dataframe - output from makePhenotype function
 #' @param covariates covariate dataframe - output from risk.factor function.  Optional.
-#' @param phe.name phenotypes to be included in outputted file. multiple phenotypes can be specified as a vector. if null, all phenotypes will be outputted.
-#' @param cov.name covariates to be included in outputted file. Optional. multiple covariates can be specified as a vector. if null, all covariates in file will be outputted
+#' @param phe.name phenotypes to be included in outputted data. multiple phenotypes can be specified as a vector. if null, all phenotypes will be outputted.
+#' @param cov.name covariates to be included in outputted data. Optional. multiple covariates can be specified as a vector. if null, all covariates in file will be outputted
 #' @param includeSampsFile list of samples to be included GWAS. File with the first column containing sample IDs to be kept. Can contain other columns. output from sampleQC function may be used.  Optional - if null, all samples will be outputted.
 #' @param software specify "SAIGE" or "plink" - defaults to "SAIGE"
 #' @param outDir specify directory to output file

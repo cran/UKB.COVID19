@@ -23,9 +23,9 @@ makeGWASFiles(
 
 \item{covariates}{covariate dataframe - output from risk.factor function.  Optional.}
 
-\item{phe.name}{phenotypes to be included in outputted file. multiple phenotypes can be specified as a vector. if null, all phenotypes will be outputted.}
+\item{phe.name}{phenotypes to be included in outputted data. multiple phenotypes can be specified as a vector. if null, all phenotypes will be outputted.}
 
-\item{cov.name}{covariates to be included in outputted file. Optional. multiple covariates can be specified as a vector. if null, all covariates in file will be outputted}
+\item{cov.name}{covariates to be included in outputted data. Optional. multiple covariates can be specified as a vector. if null, all covariates in file will be outputted}
 
 \item{includeSampsFile}{list of samples to be included GWAS. File with the first column containing sample IDs to be kept. Can contain other columns. output from sampleQC function may be used.  Optional - if null, all samples will be outputted.}
 

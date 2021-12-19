@@ -1,13 +1,13 @@
 #' Reform variables
 #'
-#' @param res Merged data of phenotype from susceptibility.summary, severity.summary, mortality.summary or comorbidity.summary and covariates from covariate file.
+#' @param res Merged data of phenotype from makePhenotypes or comorbidity_summary and covariates from risk_factor.
 #' @param type Data type: susceptibility, severity, mortality or comorbidity.
 #' @keywords reform
 #' @return Reformed data for association tests using logistic regression models.
-#' @export data.reform
+#' @export data_reform
 
 # reform data
-data.reform <- function(res, type){
+data_reform <- function(res, type){
   res$ID <- as.character(res$ID)
   if(type == "cov"){
     res$sex <- as.factor(res$sex)
@@ -18,11 +18,14 @@ data.reform <- function(res, type){
     res$mixed <- as.factor(res$mixed)
     res$white <- as.factor(res$white)
     #  res$array <- as.factor(res$array)
-    res$blood_group <- as.factor(res$blood_group)
-    res$O <- as.factor(res$O)
-    res$AB <- as.factor(res$AB)
-    res$A <- as.factor(res$A)
-    res$B <- as.factor(res$B)
+    
+    if(any("blood_group" %in% colnames(res))){
+      res$blood_group <- as.factor(res$blood_group)
+      res$O <- as.factor(res$O)
+      res$AB <- as.factor(res$AB)
+      res$A <- as.factor(res$A)
+      res$B <- as.factor(res$B)
+    } 
     res$inAgedCare <- as.factor(res$inAgedCare)
     res[is.na(res$ethnic),c("other.ppl","black","asian","mixed","white")] <- NA
     res[is.na(res$inAgedCare),"inAgedCare"] <- 0
@@ -49,5 +52,6 @@ data.reform <- function(res, type){
     for(j in 1:length(comorb.name)) res[,comorb.name[j]] <- as.factor(res[,comorb.name[j]])
   }
   
-  return(res)
+  class(res) <- "data.frame"
+  res
 }

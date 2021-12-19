@@ -13,8 +13,7 @@
 #' @param code.file The operation code file, which is included in the package.
 #' @param pheno.type The phenotype options, which include "susceptibility", "severity", and "mortality".
 #' @param Date Date, ddmmyyyy, select the results until a certain date. By default, Date = NULL, the latest hospitalization date.
-#' @param out.name Name of files to be outputted. By default, out.name = NULL, “phenotypes.txt”.
-#' @return Returns data.frame and outputs a phenotype file with phenotypes for COVID-10 susceptibility, severity and mortality.
+#' @return Returns a data.frame with phenotypes for COVID-19 susceptibility, severity and mortality.
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @import tidyverse
@@ -32,12 +31,11 @@
 #' hesin_oper.file=covid_example("sim_hesin_oper.txt.gz"),
 #' hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
 #' code.file=covid_example("coding240.txt.gz"),
-#' pheno.type = "severity",
-#' out.name=paste0(covid_example("results"),"/phenotype"))
+#' pheno.type = "severity")
 #' }
 #'
 
-makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.file, death.cause.file, hesin.file, hesin_diag.file, hesin_oper.file, hesin_critical.file, code.file, pheno.type = "severity", Date=NULL, out.name=NULL){
+makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.file, death.cause.file, hesin.file, hesin_diag.file, hesin_oper.file, hesin_critical.file, code.file, pheno.type = "severity", Date=NULL){
   
   inFiles <- c(get0("res.eng"), get0("res.wal"), get0("res.sco"))
   
@@ -239,7 +237,7 @@ makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.
     res$ppl.result <- 0; res[res$result == 1 & !(is.na(res$result)),"ppl.result"] <- 1
     
     # reform  variables
-    res <- data.reform(res, type = "susceptibility")
+    res <- data_reform(res, type = "susceptibility")
     
     # rename phenoytpes
     colnames(res)[colnames(res) == "ppl.result"] <- "pos.ppl"
@@ -249,23 +247,17 @@ makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.
   
   if(pheno.type == "mortality"){
     pheno <- res[res$result == 1, c("ID","mortality")]
-    res <- data.reform(pheno, type = "mortality")
+    res <- data_reform(pheno, type = "mortality")
   }
   
   if(pheno.type == "severity"){
     pheno <- res[res$result == 1, c("ID","hospitalisation","critical.care","advanced.critical.care","mortality")]
-    res <- data.reform(pheno, type = "severity")
+    res <- data_reform(pheno, type = "severity")
   }
   
-  
-  ##ouptut file
-  if(is.null(out.name)) out.name <-"phenotypes"
-  
-  print(paste0("Outputting file: ", out.name,".txt"))
-  write.table(res,paste0(out.name,".txt"),row.names = F, quote = F, sep = "\t")
-  
-  ## return dataframe
-  return(res)
+  ## return data.frame
+  class(res) <- "data.frame"
+  res
 }
 
 

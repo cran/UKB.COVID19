@@ -1,7 +1,7 @@
 #' Generate covariate file
 #'
-#' This function formats and outputs a covariate file, used for input for other functions.
-#' @param ukb.data tab delimited UK Biobank phenotype file.
+#' This function formats and outputs a covariate table, used for input for other functions.
+#' @param ukb.data tab delimited UK Biobank phenotype file. The file should include fields of gender, year of birth, BMI, ethnic background, SES, and smoking.
 #' @param ABO.data Latest yyyymmdd_covid19_misc.txt file.
 #' @param hesin.file Latest yyyymmdd_hesin.txt file.
 #' @param res.eng Latest covid result file/files for England.
@@ -9,24 +9,22 @@
 #' @param res.sco Latest covid result file/files for Scotland. Only available for downloads after April 2021.
 #' @param fields User specified field codes from ukb.data file.
 #' @param field.names User specified field names.
-#' @param out.file Name of covariate file to be outputted. By default, out.file = NULL, “covariate.txt”.
-#' @export risk.factor
-#' @return Outputs a covariate file, used for input for other functions. Automatically returns sex, age at birthday in 2020, SES, self-reported ethnicity, most recently reported BMI, most recently reported pack-years, whether they reside in aged care (based on hospital admissions data, and covid test data) and blood type. Function also allows user to specify fields of interest (field codes, provided by UK Biobank), and allows the users to specify more intuitive names, for selected fields.
+#' @export risk_factor
+#' @return Outputs a covariate table, used for input for other functions. Automatically returns sex, age at birthday in 2020, SES, self-reported ethnicity, most recently reported BMI, most recently reported pack-years, whether they reside in aged care (based on hospital admissions data, and covid test data) and blood type. Function also allows user to specify fields of interest (field codes, provided by UK Biobank), and allows the users to specify more intuitive names, for selected fields.
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @import tidyverse
 #' @import utils
 #' @examples
 #' \dontrun{
-#' risk.factor(ukb.data=covid_example("sim_ukb.tab.gz"),
+#' covars <- risk_factor(ukb.data=covid_example("sim_ukb.tab.gz"),
 #' ABO.data=covid_example("sim_covid19_misc.txt.gz"),
 #' hesin.file=covid_example("sim_hesin.txt.gz"),
-#' res.eng=covid_example("sim_result_england.txt.gz"),
-#' out.file=paste0(covid_example("results"),"/covariate"))
+#' res.eng=covid_example("sim_result_england.txt.gz"))
 #' }
 #'
 
-risk.factor <- function(ukb.data, ABO.data, hesin.file, res.eng, res.wal = NULL, res.sco = NULL, fields = NULL, field.names = NULL, out.file = NULL){
+risk_factor <- function(ukb.data, ABO.data = NULL, hesin.file, res.eng, res.wal = NULL, res.sco = NULL, fields = NULL, field.names = NULL){
   
   
   colnames <- fread(ukb.data, nrows=0)
@@ -35,6 +33,13 @@ risk.factor <- function(ukb.data, ABO.data, hesin.file, res.eng, res.wal = NULL,
            names(colnames) %like% "f.21001." %>% which,
            names(colnames) %like% "f.21000." %>% which,
            names(colnames) %like% "f.20161." %>% which)
+  
+  if(!("f.31.0.0" %in% names(colnames))) stop("no sex information (f.31.0.0) in the ukb.tab file.")
+  if(!("f.34.0.0" %in% names(colnames))) stop("no year of birth information (f.34.0.0) in the ukb.tab file.")
+  if(!("f.189.0.0" %in% names(colnames))) stop("no SES information (f.189.0.0) in the ukb.tab file.")
+  if(!(any(names(colnames) %like% "f.21001."))) stop("no BMI information (f.21001.) in the ukb.tab file.")
+  if(!(any(names(colnames) %like% "f.21000."))) stop("no self-reported ethnicity information (f.21000.) in the ukb.tab file.")
+  if(!(any(names(colnames) %like% "f.20161."))) stop("no reported pack-years information (f.20161.) in the ukb.tab file.")
   
   if(!is.null(fields)) {
     
@@ -86,14 +91,19 @@ risk.factor <- function(ukb.data, ABO.data, hesin.file, res.eng, res.wal = NULL,
   smoke[is.na(smoke[,1]),1] <- 0
   phe$smoke <- smoke[,1]
   
-  ABO <- read.table(ABO.data,header = T, sep = "\t",stringsAsFactors = F)
-  phe <- merge(phe,ABO,by.x = "ID", by.y = "eid",all = T)
-  phe$A <- phe$B <- phe$AB <- phe$O <- 0
-  phe[phe$blood_group %in% c("AA","AO") & !(is.na(phe$blood_group)),"A"] <- 1
-  phe[phe$blood_group %in% c("BB","BO") & !(is.na(phe$blood_group)),"B"] <- 1
-  phe[phe$blood_group == "AB" & !(is.na(phe$blood_group)),"AB"] <- 1
-  phe[phe$blood_group == "OO" & !(is.na(phe$blood_group)),"O"] <- 1
-  phe[is.na(phe$blood_group),c("A","B","AB","O")] <- NA
+  ### ABO blood type
+  if(!(is.null(ABO.data))){
+    
+    ABO <- read.table(ABO.data,header = T, sep = "\t",stringsAsFactors = F)
+    phe <- merge(phe,ABO,by.x = "ID", by.y = "eid",all = T)
+    phe$A <- phe$B <- phe$AB <- phe$O <- 0
+    phe[phe$blood_group %in% c("AA","AO") & !(is.na(phe$blood_group)),"A"] <- 1
+    phe[phe$blood_group %in% c("BB","BO") & !(is.na(phe$blood_group)),"B"] <- 1
+    phe[phe$blood_group == "AB" & !(is.na(phe$blood_group)),"AB"] <- 1
+    phe[phe$blood_group == "OO" & !(is.na(phe$blood_group)),"O"] <- 1
+    phe[is.na(phe$blood_group),c("A","B","AB","O")] <- NA
+    
+  }
   
   hesIn <- data.table::fread(hesin.file)
   
@@ -152,10 +162,7 @@ risk.factor <- function(ukb.data, ABO.data, hesin.file, res.eng, res.wal = NULL,
   }
   
   # reform variables
-  cov <- data.reform(phe, type = "cov")
-  
-  if(is.null(out.file)) out.file <- "covariate"
-  write.table(cov,paste0(out.file,".txt"),row.names = F, quote = F, sep = "\t")
-
-  return(cov)
+  cov <- data_reform(phe, type = "cov")
+  class(cov) <- "data.frame"
+  cov
 }

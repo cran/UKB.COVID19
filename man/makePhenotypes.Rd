@@ -17,8 +17,7 @@ makePhenotypes(
   hesin_critical.file,
   code.file,
   pheno.type = "severity",
-  Date = NULL,
-  out.name = NULL
+  Date = NULL
 )
 }
 \arguments{
@@ -47,11 +46,9 @@ makePhenotypes(
 \item{pheno.type}{The phenotype options, which include "susceptibility", "severity", and "mortality".}
 
 \item{Date}{Date, ddmmyyyy, select the results until a certain date. By default, Date = NULL, the latest hospitalization date.}
-
-\item{out.name}{Name of files to be outputted. By default, out.name = NULL, “phenotypes.txt”.}
 }
 \value{
-Returns data.frame and outputs a phenotype file with phenotypes for COVID-10 susceptibility, severity and mortality.
+Returns a data.frame with phenotypes for COVID-19 susceptibility, severity and mortality.
 }
 \description{
 Generate COVID-19 phenotypes
@@ -67,8 +64,7 @@ hesin_diag.file=covid_example("sim_hesin_diag.txt.gz"),
 hesin_oper.file=covid_example("sim_hesin_oper.txt.gz"),
 hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
 code.file=covid_example("coding240.txt.gz"),
-pheno.type = "severity",
-out.name=paste0(covid_example("results"),"/phenotype"))
+pheno.type = "severity")
 }
 
 }

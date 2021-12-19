@@ -31,14 +31,14 @@ devtools::install_github("bahlolab/UKB.COVID19")
 ### Risk factor
 
 This is a basic example which shows you how to creat a covariate file with risk factors using UKBB main tab data:
+Note: the ukb.tab file must include fields: f.eid, f.31.0.0, f.34.0.0, f.189.0.0, f.21001., f.21000., f.20161.
 
 ``` r
 library(UKB.COVID19)
-covar <- risk.factor(ukb.data=covid_example("sim_ukb.tab.gz"), 
+covar <- risk_factor(ukb.data=covid_example("sim_ukb.tab.gz"), 
                          ABO.data=covid_example("sim_covid19_misc.txt.gz"),
                          hesin.file=covid_example("sim_hesin.txt.gz"),
-                         res.eng=covid_example("sim_result_england.txt.gz"),
-                         out.file=paste0(covid_example("results"),"/covariate"))
+                         res.eng=covid_example("sim_result_england.txt.gz"))
 ```
 
 ### COVID-19 susceptibility
@@ -55,8 +55,7 @@ susceptibility <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
                         hesin_oper.file=covid_example("sim_hesin_oper.txt.gz"),
                         hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
                         code.file=covid_example("coding240.txt.gz"),
-                        pheno.type = "susceptibility",
-                        out.name=paste0(covid_example("results"),"/phenotype"))
+                        pheno.type = "susceptibility")
 ```
 
 ### COVID-19 severity
@@ -73,13 +72,13 @@ severity <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
                         hesin_oper.file=covid_example("sim_hesin_oper.txt.gz"),
                         hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
                         code.file=covid_example("coding240.txt.gz"),
-                        pheno.type = "severity",
-                        out.name=paste0(covid_example("results"),"/phenotype"))
+                        pheno.type = "severity")
 ```
 
 ### COVID-19 mortality
 
 This is an example which shows you how to generate a file with COVID-19 mortality phenotype:
+Note: the code file is udner /UKB.COVID19/inst/extdata/coding240.txt.gz
 
 ``` r
 mortality <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
@@ -91,33 +90,31 @@ mortality <- makePhenotypes(ukb.data=covid_example("sim_ukb.tab.gz"),
                         hesin_oper.file=covid_example("sim_hesin_oper.txt.gz"),
                         hesin_critical.file=covid_example("sim_hesin_critical.txt.gz"),
                         code.file=covid_example("coding240.txt.gz"),
-                        pheno.type = "mortality",
-                        out.name=paste0(covid_example("results"),"/phenotype"))
+                        pheno.type = "mortality")
 ```
 
 ### Association tests between COVID-19 and comorbidities
 
 This is an example which shows you how to generate a file with all comorbidities in ICD-10 code and how to perform the association tests between comorbidities and COVID-19:
+Note: the code file is udner /UKB.COVID19/inst/extdata/ICD10.coding19.txt.gz
 
 ``` r
 # generate comorbidity file
-comorb <- comorbidity.summary(ukb.data=covid_example("sim_ukb.tab.gz"),
+comorb <- comorbidity_summary(ukb.data=covid_example("sim_ukb.tab.gz"),
                               hesin.file=covid_example("sim_hesin.txt.gz"), 
                               hesin_diag.file=covid_example("sim_hesin_diag.txt.gz"), 
                               ICD10.file=covid_example("ICD10.coding19.txt.gz"),
                               primary = FALSE,
-                              Date.start = "16/03/2020",
-                              outfile=paste0(covid_example("results"),"/comorbidity_2020-3-16.txt"))
+                              Date.start = "16/03/2020")
 
 # association tests 
-comorb.asso <- comorbidity.asso(pheno=susceptibility,
+comorb.asso <- comorbidity_asso(pheno=susceptibility,
                                 covariates=covar,
                                 cormorbidity=comorb,
                                 population="white",
                                 cov.name=c("sex","age","bmi","SES","smoke","inAgedCare"),
                                 phe.name="pos.neg",
-                                ICD10.file=covid_example("ICD10.coding19.txt.gz"),
-                                output = "cormorb_pos_neg_asso.csv")
+                                ICD10.file=covid_example("ICD10.coding19.txt.gz"))
 
 ```
 

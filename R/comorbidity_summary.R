@@ -8,26 +8,24 @@
 #' @param ICD10.file The ICD10 code file, which is included in the package.
 #' @param Date.start Date, dd/mm/yyyy, select the start date of hospital inpatient record period. 
 #' @param Date.end Date, dd/mm/yyyy, select the end date of hospital inpatient record period.
-#' @param outfile Name of comorbidity summary file to be outputted.
-#' @return Outputs comorbidity summary file, named comorbidity_<Date.start>_<Date.end>.RData, including phenotype, non-genetic risk factors and all comorbidities, which will be used in the comorbidity association tests.
+#' @return Outputs comorbidity summary table, named comorbidity_<Date.start>_<Date.end>.RData, including phenotype, non-genetic risk factors and all comorbidities, which will be used in the comorbidity association tests.
 #' @import data.table
 #' @import utils
 #' @importFrom magrittr %>%
-#' @export comorbidity.summary
+#' @export comorbidity_summary
 #' @examples 
 #' \dontrun{
-#' comorb <- comorbidity.summary(ukb.data=covid_example("sim_ukb.tab.gz"),
+#' comorb <- comorbidity_summary(ukb.data=covid_example("sim_ukb.tab.gz"),
 #' hesin.file=covid_example("sim_hesin.txt.gz"), 
 #' hesin_diag.file=covid_example("sim_hesin_diag.txt.gz"), 
 #' ICD10.file=covid_example("ICD10.coding19.txt.gz"),
 #' primary = FALSE,
-#' Date.start = "16/03/2020",
-#' outfile=paste0(covid_example("results"),"/comorbidity_2020-3-16.txt"))
+#' Date.start = "16/03/2020")
 #' }
 #' 
 
 ### comorbidity
-comorbidity.summary <- function(ukb.data, hesin.file, hesin_diag.file, primary=FALSE, ICD10.file, Date.start=NULL, Date.end=NULL, outfile=NULL){
+comorbidity_summary <- function(ukb.data, hesin.file, hesin_diag.file, primary=FALSE, ICD10.file, Date.start=NULL, Date.end=NULL){
   cov <- fread(ukb.data, header = T, select = "f.eid", data.table = F, quote="", col.names = "ID")
   hesin_diag <- fread(hesin_diag.file) %>% as.data.frame
   hesin <- fread(hesin.file) %>% as.data.frame
@@ -74,17 +72,8 @@ comorbidity.summary <- function(ukb.data, hesin.file, hesin_diag.file, primary=F
     }  
   }
  
-  cov <- data.reform(cov, type = "comorbidity")
+  cov <- data_reform(cov, type = "comorbidity")
   
-  if(is.null(outfile)){
-    if(primary) {
-      outfile <- paste0("comorbidity_",Date.start,"_",Date.end,".primary.RData")
-    }else{
-      outfile <- paste0("comorbidity_",Date.start,"_",Date.end,".RData")
-    }
-  }
-  
-  write.table(cov, outfile, row.names = F, quote = F, sep = "\t")
-  return(cov)
+  cov
 }
 
