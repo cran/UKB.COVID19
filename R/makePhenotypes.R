@@ -256,7 +256,7 @@ makePhenotypes <- function(ukb.data, res.eng, res.wal=NULL, res.sco=NULL, death.
   }
   
   ## return data.frame
-  class(res) <- "data.frame"
+  attr(res, "class") <- "data.frame"
   res
 }
 

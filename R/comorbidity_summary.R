@@ -73,7 +73,7 @@ comorbidity_summary <- function(ukb.data, hesin.file, hesin_diag.file, primary=F
   }
  
   cov <- data_reform(cov, type = "comorbidity")
-  
+  attr(cov, "class") <- "data.frame"
   cov
 }
 

@@ -55,7 +55,7 @@ comorbidity_asso <- function(pheno, covariates, cormorbidity, population = "all"
     }
   }
 
-  class(comorb.asso) <- "data.frame"
+  attr(comorb.asso, "class") <- "data.frame"
   comorb.asso
 }
 

@@ -24,6 +24,6 @@ log_cov <- function(pheno, covariates, phe.name, cov.name = c("sex","age","bmi")
   OR <- odds.ratio(m)
   asso <- as.data.frame(cbind(log.reg$coefficients[,1],OR[,c(1:4)]))
   colnames(asso)[1] <- "Estimate"
-  class(asso) <- "data.frame"
+  attr(asso, "class") <- "data.frame"
   asso
 }

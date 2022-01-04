@@ -52,6 +52,6 @@ data_reform <- function(res, type){
     for(j in 1:length(comorb.name)) res[,comorb.name[j]] <- as.factor(res[,comorb.name[j]])
   }
   
-  class(res) <- "data.frame"
+  attr(res, "class") <- "data.frame"
   res
 }

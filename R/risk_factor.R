@@ -163,6 +163,6 @@ risk_factor <- function(ukb.data, ABO.data = NULL, hesin.file, res.eng, res.wal 
   
   # reform variables
   cov <- data_reform(phe, type = "cov")
-  class(cov) <- "data.frame"
+  attr(cov, "class") <- "data.frame"
   cov
 }

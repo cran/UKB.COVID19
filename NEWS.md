@@ -19,3 +19,9 @@
 - Removed the argument for output file name in `risk_factor()`, `comorbidity_asso()`, `comorbidity_summary()`, and `makePhentypes()`. The functions only return objects but not output files. Users can choose if they want to wrtie the outputs into files and can custmise the output files by themselves.
 - Added in `risk_factor()` cheching ukb.tab file and return error messages if the file doesn't include the fields needed for the analyses.
 - Defined returned objects under S3 class.
+
+# UKB.COVID19 0.1.3
+
+## Minor changes
+
+- Added GWAS scripts under inst/GWAS/.
