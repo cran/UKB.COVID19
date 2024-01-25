@@ -1,4 +1,4 @@
-9071abfc0008c734cd68cd9f37f98bff *DESCRIPTION
+d53bb65f27df449d0b4f5dd43d148fa7 *DESCRIPTION
 4971cbaeb7596fdfc1a54fa7977c712b *LICENSE
 19d7bd6c1f0775a7f1b73c206289d586 *NAMESPACE
 683953d840edce95b313b3064c10349a *NEWS.md
@@ -77,8 +77,4 @@ d246a7de2edf9cccce11ff1f4212d44c *man/makeGWASFiles.Rd
 cb3821250a19653f6b0327dc85525008 *man/sampleQC.Rd
 4f513fb28c1b8e25db187c0ca33827c7 *man/variantQC.Rd
 badfcc9e4992d5d87851f05497708f92 *tests/testthat.R
-2c44f2ac41284b436f82c4d9f410b8d5 *tests/testthat/test_asso_test.R
-8318eec36f989efefa06444994026c37 *tests/testthat/test_comorbidity_asso.R
 7d7218da91bdc5937aeb6514a6e9266c *tests/testthat/test_comorbidity_summary.R
-054e37aa50118111ea45450dc2f68a68 *tests/testthat/test_makePhenotypes.R
-ec4d346bfe91ce4f08e0f9f76a2750ce *tests/testthat/test_risk_factor.R
