@@ -1,7 +1,7 @@
-d53bb65f27df449d0b4f5dd43d148fa7 *DESCRIPTION
+84be8b476b3231fad35e89ad8e18fc4b *DESCRIPTION
 4971cbaeb7596fdfc1a54fa7977c712b *LICENSE
 19d7bd6c1f0775a7f1b73c206289d586 *NAMESPACE
-683953d840edce95b313b3064c10349a *NEWS.md
+9ca23cb88d6caa797ee3062a632cfef3 *NEWS.md
 6733cc0bd7abb9edff8385ba77d07ade *R/asso_test.R
 b3aa9ebf611f197a6982b44f39fd692f *R/comorbidity_asso.R
 6a9ba70e02905328cb5cc7b5f0a3f980 *R/comorbidity_summary.R
@@ -14,8 +14,12 @@ de1f4a96f946121231bb3f3f98d25aea *R/risk_factor.R
 89eddc51957fe2301977265500053326 *R/sampleQC.R
 1d0eae33124134d049273d7ed47ed2eb *R/variantQC.R
 c755cfc529fff40eb0d17873aefe745e *README.md
+44402ebcb4b6715c116a8a2995b781fe *build/vignette.rds
 358ac89ace69ec1a8a102962cd42fccb *inst/GWAS/UKB.COVID19_GWAStutorial.Rmd
 c128908d5a4def7d470be9fd4a3506fc *inst/GWAS/UKB.COVID19_GWAStutorial.html
+8344494505a8b60269b9a4d6f09d9d27 *inst/doc/Introduction_to_UKB_COVID19.R
+4be326e2a3e3a67d1321dc48d9b3b5d0 *inst/doc/Introduction_to_UKB_COVID19.Rmd
+b784d0ffe33826eb0b7c8b7b72d1a9d0 *inst/doc/Introduction_to_UKB_COVID19.html
 10097a100649060d15efc1fd8a74462b *inst/extdata/ICD10.coding19.txt.gz
 0aec4d75d8bbb11cef82f77944720563 *inst/extdata/alleleFreqs/ukb_mfi_chr10_v3.txt
 8d42b5d296892fcfc3c746a37386f693 *inst/extdata/alleleFreqs/ukb_mfi_chr11_v3.txt
@@ -78,3 +82,4 @@ cb3821250a19653f6b0327dc85525008 *man/sampleQC.Rd
 4f513fb28c1b8e25db187c0ca33827c7 *man/variantQC.Rd
 badfcc9e4992d5d87851f05497708f92 *tests/testthat.R
 7d7218da91bdc5937aeb6514a6e9266c *tests/testthat/test_comorbidity_summary.R
+4be326e2a3e3a67d1321dc48d9b3b5d0 *vignettes/Introduction_to_UKB_COVID19.Rmd

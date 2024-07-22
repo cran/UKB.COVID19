@@ -25,3 +25,15 @@
 ## Minor changes
 
 - Added GWAS scripts under inst/GWAS/.
+
+# UKB.COVID19 0.1.4
+
+## Minor changes
+
+- Reduce the test timing to less than 5 min.
+
+# UKB.COVID19 0.1.5
+
+## Minor changes
+
+- Added Vignettes.
