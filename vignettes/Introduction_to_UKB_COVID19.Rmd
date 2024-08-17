@@ -153,43 +153,6 @@ comorb.asso <- comorbidity_asso(pheno=susceptibility,
 head(comorb.asso, 4)
 ```
 
-## 4. Sample and Variant Quality Control
-
-The `sampleQC` and `variantQC` functions perform quality control for sample and variant data, respectively.
-
-```{r}
-# Example usage for sample QC
-sampleQC(ukb.data=covid_example("sim_ukb.tab.gz"), 
-         withdrawnFile=covid_example("sim_withdrawn.csv.gz"), 
-         ancestry="all", 
-         software="SAIGE", 
-         outDir=covid_example("results"))
-
-# Example usage for variant QC
-variantQC(snpQcFile=covid_example("sim_ukb_snp_qc.txt.gz"), 
-          mfiDir=covid_example("alleleFreqs"), 
-          mafFilt=0.001, 
-          infoFilt=0.5, 
-          outDir=covid_example("results"))
-```
-
-## 5. Preparing Files for GWAS
-
-The `makeGWASFiles` function generates phenotype files suitable for GWAS using tools like PLINK and SAIGE.
-
-```{r}
-# Example usage
-makeGWASFiles(ukb.data=covid_example("sim_ukb.tab.gz"), 
-              pheno=susceptibility, 
-              covariates=covar, 
-              phe.name="pos.ppl", 
-              cov.name=NULL, 
-              includeSampsFile=NULL, 
-              software="SAIGE", 
-              outDir=covid_example("results"), 
-              prefix="pos.ppl")
-```
-
 # Example Workflow
 
 Here is an example workflow of analysing the risk factors of COVID-19 susceptibility, that combines the main functions of the UKB.COVID19 package:
@@ -236,30 +199,6 @@ comorb.asso <- comorbidity_asso(pheno=susceptibility,
                                 phe.name="pos.neg",
                                 ICD10.file=covid_example("ICD10.coding19.txt.gz"))
 
-# Perform sample quality control
-sampleQC(ukb.data=covid_example("sim_ukb.tab.gz"), 
-         withdrawnFile=covid_example("sim_withdrawn.csv.gz"), 
-         ancestry="all", 
-         software="SAIGE", 
-         outDir=covid_example("results"))
-
-# Perform variant quality control
-variantQC(snpQcFile=covid_example("sim_ukb_snp_qc.txt.gz"), 
-          mfiDir=covid_example("alleleFreqs"), 
-          mafFilt=0.001, 
-          infoFilt=0.5, 
-          outDir=covid_example("results"))
-
-# Preparing files for GWAS
-makeGWASFiles(ukb.data=covid_example("sim_ukb.tab.gz"), 
-              pheno=susceptibility, 
-              covariates=covar, 
-              phe.name="pos.ppl", 
-              cov.name=NULL, 
-              includeSampsFile=NULL, 
-              software="SAIGE", 
-              outDir=covid_example("results"), 
-              prefix="pos.ppl")
 ```
 
 # Conclusion

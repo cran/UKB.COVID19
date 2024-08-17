@@ -37,3 +37,9 @@
 ## Minor changes
 
 - Added Vignettes.
+
+# UKB.COVID19 0.1.6
+
+## Minor changes
+
+- Fixed Vignette codes which writes to covid_example("results").

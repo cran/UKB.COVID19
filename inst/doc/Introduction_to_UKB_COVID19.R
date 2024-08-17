@@ -90,33 +90,6 @@ comorb.asso <- comorbidity_asso(pheno=susceptibility,
 head(comorb.asso, 4)
 
 ## -----------------------------------------------------------------------------
-# Example usage for sample QC
-sampleQC(ukb.data=covid_example("sim_ukb.tab.gz"), 
-         withdrawnFile=covid_example("sim_withdrawn.csv.gz"), 
-         ancestry="all", 
-         software="SAIGE", 
-         outDir=covid_example("results"))
-
-# Example usage for variant QC
-variantQC(snpQcFile=covid_example("sim_ukb_snp_qc.txt.gz"), 
-          mfiDir=covid_example("alleleFreqs"), 
-          mafFilt=0.001, 
-          infoFilt=0.5, 
-          outDir=covid_example("results"))
-
-## -----------------------------------------------------------------------------
-# Example usage
-makeGWASFiles(ukb.data=covid_example("sim_ukb.tab.gz"), 
-              pheno=susceptibility, 
-              covariates=covar, 
-              phe.name="pos.ppl", 
-              cov.name=NULL, 
-              includeSampsFile=NULL, 
-              software="SAIGE", 
-              outDir=covid_example("results"), 
-              prefix="pos.ppl")
-
-## -----------------------------------------------------------------------------
 # Load the package
 library(UKB.COVID19)
 
@@ -158,28 +131,4 @@ comorb.asso <- comorbidity_asso(pheno=susceptibility,
                                 phe.name="pos.neg",
                                 ICD10.file=covid_example("ICD10.coding19.txt.gz"))
 
-# Perform sample quality control
-sampleQC(ukb.data=covid_example("sim_ukb.tab.gz"), 
-         withdrawnFile=covid_example("sim_withdrawn.csv.gz"), 
-         ancestry="all", 
-         software="SAIGE", 
-         outDir=covid_example("results"))
-
-# Perform variant quality control
-variantQC(snpQcFile=covid_example("sim_ukb_snp_qc.txt.gz"), 
-          mfiDir=covid_example("alleleFreqs"), 
-          mafFilt=0.001, 
-          infoFilt=0.5, 
-          outDir=covid_example("results"))
-
-# Preparing files for GWAS
-makeGWASFiles(ukb.data=covid_example("sim_ukb.tab.gz"), 
-              pheno=susceptibility, 
-              covariates=covar, 
-              phe.name="pos.ppl", 
-              cov.name=NULL, 
-              includeSampsFile=NULL, 
-              software="SAIGE", 
-              outDir=covid_example("results"), 
-              prefix="pos.ppl")
 
